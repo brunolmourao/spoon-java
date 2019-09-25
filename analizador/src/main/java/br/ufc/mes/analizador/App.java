@@ -11,6 +11,7 @@ import spoon.MavenLauncher;
 import spoon.SpoonAPI;
 import spoon.reflect.code.CtIf;
 import spoon.reflect.declaration.CtClass;
+import spoon.reflect.declaration.CtElement;
 import spoon.reflect.declaration.CtField;
 import spoon.reflect.visitor.filter.TypeFilter;
 
@@ -37,15 +38,21 @@ public class App
         	}
         	adj.put(element.getQualifiedName(), set);
         }
-        	Set mapkeys = adj.keySet();
-        	Iterator<String> it2 = mapkeys.iterator();
-        	while(it2.hasNext()) {
-        		String chave = it2.next();
-        		if(chave != null) {
-				System.out.println("Class: "+ chave);
+        Set mapkeys = adj.keySet();
+        Iterator<String> it2 = mapkeys.iterator();
+        while(it2.hasNext()) {
+        	String chave = it2.next();
+        	if(chave != null) {
+        		System.out.println("Class: "+ chave);
 				System.out.println("Field: " + adj.get(chave));
-        		}
         	}
+        }
+        HashMap adj2 = new HashMap<String,Set<String>>();
+        for(CtClass<?> element: api.getModel().getElements(new TypeFilter<CtClass>(CtClass.class))) {
+        	HashSet set = new HashSet();
+        	CtElement l = element.getParent();
+        	System.out.println(l.toString());
+        }
         /*for(CtClass<?> element: api.getModel().getElements(new TypeFilter<CtClass>(CtClass.class))) {
         	System.out.println("Class" + element.getQualifiedName());
         	System.out.println("Metodos"+ element.getDeclaredExecutables().size());
