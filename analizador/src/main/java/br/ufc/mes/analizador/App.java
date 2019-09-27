@@ -23,8 +23,11 @@ public class App
         SpoonAPI api = new Launcher();
         api.addInputResource(path);
         api.buildModel();
-        //api.addProcessor("br.ufc.mes.analizador.AdjacentListProcessor");
-        //api.process();
+        api.addProcessor("br.ufc.mes.analizador.FanInProcessor");
+        api.addProcessor("br.ufc.mes.analizador.FanOutProcessor");
+        api.addProcessor("br.ufc.mes.analizador.NumMethodsProcessor");
+        api.addProcessor("br.ufc.mes.analizador.NumMHerdadosProcessor");
+        api.process();
         HashMap adj = new HashMap<String,Set<String>>();
         for (CtClass<?> element: api.getModel().getElements(new TypeFilter<CtClass>(CtClass.class))) {
         	List l = element.getFields();
@@ -50,8 +53,8 @@ public class App
         HashMap adj2 = new HashMap<String,Set<String>>();
         for(CtClass<?> element: api.getModel().getElements(new TypeFilter<CtClass>(CtClass.class))) {
         	HashSet set = new HashSet();
-        	CtElement l = element.getParent();
-        	System.out.println(l.toString());
+        	System.out.println("Herança: "+ element.getSuperclass());
+        	System.out.println("Implementação : "+ element.getSuperInterfaces());
         }
         /*for(CtClass<?> element: api.getModel().getElements(new TypeFilter<CtClass>(CtClass.class))) {
         	System.out.println("Class" + element.getQualifiedName());
